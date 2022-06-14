@@ -1,0 +1,252 @@
+FoamFile {
+    version 2.3;
+    format ascii;
+    class dictionary;
+    object controlDict;
+}
+functions {
+    sigHandler {
+        type writeOldTimesOnSignal;
+        sleepSecondsBeforeReraising 60;
+        numberOfTimestepsToStore 1;
+        writeCurrent false;
+        sigFPE true;
+        sigSEGV false;
+        sigINT false;
+        sigQUIT true;
+    }
+    flexibleWriter {
+        type flexibleWriter;
+        clockTimeLimit 60;
+        fracTime 0.1;
+    }
+    divergenceHandler {
+        type divergenceHandler;
+        nItersToSkip 50;
+        p -1000000000000000.0 1000000000000000.0;
+        U 10000000.0;
+        scalarFields (p);
+        vectorFields (U);
+        active yes;
+    }
+    ConvergenceIndicator {
+        type convergenceIndicator;
+        scalarFields (p);
+        vectorFields (U);
+    }
+    forces0 {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log on;
+        type forces;
+        functionObjectLibs ("libforces.so");
+        patches (
+            face19
+            face26
+            face44
+            face28
+            face45
+            face38
+            face27
+            face23
+            face33
+            face35
+            face16
+            face20
+            face57
+            face37
+            face13
+            face40
+            face42
+            face58
+            face49
+            face25
+            face22
+            face43
+            face55
+            face50
+            face32
+            face54
+            face39
+            face47
+            face21
+            face46
+            face11
+            face36
+            face12
+            face52
+            face30
+            face18
+            face34
+            face29
+            face17
+            face48
+            face53
+            face15
+            face41
+            face14
+            face56
+            face31
+            face24
+            face51
+        );
+        CofR (0.0 0.0 0.0);
+        rhoName rhoInf;
+        rhoInf 997.33;
+        pName p;
+        UName U;
+    }
+    faceSource10_p {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (p);
+        componentToWrite -1;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_nut {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (nut);
+        componentToWrite -1;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_k {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (k);
+        componentToWrite -1;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_omega {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (omega);
+        componentToWrite -1;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_Ux {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (U);
+        componentToWrite 0;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_Uy {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (U);
+        componentToWrite 1;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+    faceSource10_Uz {
+        enabled on;
+        outputControl timeStep;
+        outputInterval 1;
+        log off;
+        type faceSource;
+        functionObjectLibs ("libfieldFunctionObjects.so");
+        valueOutput on;
+        source patch;
+        sourceName face6;
+        operation areaAverage;
+        fields (U);
+        componentToWrite 2;
+        surfaceFormat null;
+        specificScaleFactorDict {
+            p 997.33;
+            p_rgh 997.33;
+        }
+    }
+}
+libs ("libsimpleFunctionObjects.so" "libgroovyBC.so" "libsimScaleFunctionObjects.so");
+application simpleFoam;
+startFrom startTime;
+stopAt endTime;
+purgeWrite 0;
+writeFormat ascii;
+writePrecision 12;
+writeCompression on;
+timeFormat general;
+timePrecision 12;
+runTimeModifiable yes;
+deltaT 1.0;
+startTime 0;
+endTime 1000.0;
+adjustTimeStep no;
+writeControl timeStep;
+writeInterval 1000;
+secondaryWriteControl adjustableRunTime;
+secondaryWriteInterval 1000.0;
